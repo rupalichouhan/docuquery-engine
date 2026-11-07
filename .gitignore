@@ -1,0 +1,53 @@
+# ========================================================
+# DocuQuery Engine - Git Ignore
+# ========================================================
+
+# 1. Environment & API Secrets (CRITICAL: Do NOT commit!)
+.env
+.env.local
+.env.*.local
+*.env
+backend/.env
+frontend/.env.local
+
+# 2. Python Virtual Environment & Caches
+venv/
+.venv/
+env/
+__pycache__/
+*.py[cod]
+*$py.class
+*.egg-info/
+.pytest_cache/
+.coverage
+htmlcov/
+
+# 3. Node & Next.js Build Outputs
+node_modules/
+frontend/node_modules/
+frontend/.next/
+frontend/out/
+.next/
+*.log
+npm-debug.log*
+yarn-debug.log*
+
+# 4. Local Database, Heavy Models & User Uploads
+data/uploads/*
+!data/uploads/.gitkeep
+data/models/
+data/*.db
+data/*.db-wal
+data/*.db-shm
+data/*.wal
+data/kuzu*
+data/benchmark_results.json
+postgres_data/
+
+# 5. OS & IDE metadata
+.DS_Store
+Thumbs.db
+desktop.ini
+.vscode/
+.idea/
+*.swp

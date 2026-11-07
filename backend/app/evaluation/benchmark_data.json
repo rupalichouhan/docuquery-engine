@@ -1,0 +1,107 @@
+[
+  {
+    "id": "q1",
+    "question": "What was the total revenue growth rate between 2023 and 2024?",
+    "ground_truth_answer": "Total revenue grew by 15.0%, increasing from $100M in 2023 to $115M in 2024.",
+    "expected_context": "Revenue was $100M in 2023 and increased to $115M in 2024.",
+    "requires_math_verification": true
+  },
+  {
+    "id": "q2",
+    "question": "What is the primary embedding model used in the DocuQuery Engine?",
+    "ground_truth_answer": "The system utilizes BAAI/bge-small-en-v1.5 running locally via FastEmbed on CPU.",
+    "expected_context": "bge-small-en-v1.5 running locally via FastEmbed",
+    "requires_math_verification": false
+  },
+  {
+    "id": "q3",
+    "question": "How does the system fuse vector and graph retrieval rankings?",
+    "ground_truth_answer": "It combines dense vector and graph traversal results using Reciprocal Rank Fusion (RRF) with a standard constant k=60.",
+    "expected_context": "Reciprocal Rank Fusion (RRF) combines vector and graph results",
+    "requires_math_verification": false
+  },
+  {
+    "id": "q4",
+    "question": "What was the operating profit margin in Q4?",
+    "ground_truth_answer": "The operating profit margin in Q4 was 25.0%, calculated from operating income of $25M on $100M revenue.",
+    "expected_context": "Operating income was $25M against $100M in Q4 revenue.",
+    "requires_math_verification": true
+  },
+  {
+    "id": "q5",
+    "question": "Which embedded graph database is integrated in the platform?",
+    "ground_truth_answer": "The platform embeds KùzuDB directly inside the Python runtime.",
+    "expected_context": "KùzuDB embedded Python graph database",
+    "requires_math_verification": false
+  },
+  {
+    "id": "q6",
+    "question": "What is the maximum file upload size permitted?",
+    "ground_truth_answer": "The system permits PDF uploads up to 20MB in size.",
+    "expected_context": "Validate MIME types and file sizes (max 20MB)",
+    "requires_math_verification": false
+  },
+  {
+    "id": "q7",
+    "question": "How does the AST numerical checker verify mathematical statements?",
+    "ground_truth_answer": "It extracts numerical claims, matches them to the raw Markdown tables from ingestion, and deterministically evaluates the arithmetic using Python's AST module.",
+    "expected_context": "deterministic Python AST verification step recalculates arithmetic from raw Markdown tables",
+    "requires_math_verification": false
+  },
+  {
+    "id": "q8",
+    "question": "What was the year-over-year change in operating expenses?",
+    "ground_truth_answer": "Operating expenses decreased by 8.0%, falling from $50M to $46M.",
+    "expected_context": "Operating expenses were $50M in 2023 and $46M in 2024.",
+    "requires_math_verification": true
+  },
+  {
+    "id": "q9",
+    "question": "What happens when a document is deleted?",
+    "ground_truth_answer": "A hard delete is executed, cascading across PostgreSQL, pgvector chunks, KùzuDB graph nodes/edges, and the physical disk.",
+    "expected_context": "Support hard-deletion (cascading deletes across Postgres, pgvector, and KùzuDB)",
+    "requires_math_verification": false
+  },
+  {
+    "id": "q10",
+    "question": "What model does FlashRank run on CPU for reranking?",
+    "ground_truth_answer": "It uses ms-marco-TinyBERT-L-2-v2 for ultra-fast local cross-encoder scoring.",
+    "expected_context": "FlashRank running locally on CPU with ms-marco-TinyBERT-L-2-v2",
+    "requires_math_verification": false
+  },
+  {
+    "id": "q11",
+    "question": "How should the model respond if the context is insufficient?",
+    "ground_truth_answer": "The system MUST abstain and state: 'I cannot answer this based on the provided documents.'",
+    "expected_context": "If context is insufficient, the system MUST abstain",
+    "requires_math_verification": false
+  },
+  {
+    "id": "q12",
+    "question": "What was the growth in active user subscriptions?",
+    "ground_truth_answer": "Active subscriptions grew by 20.0%, from 10,000 to 12,000 users.",
+    "expected_context": "User subscriptions rose from 10,000 to 12,000.",
+    "requires_math_verification": true
+  },
+  {
+    "id": "q13",
+    "question": "What graph relationship types are created between entities?",
+    "ground_truth_answer": "Entities are connected via RELATES_TO with properties like relation_type, doc_id, and evidence.",
+    "expected_context": "Rel Table RELATES_TO FROM Entity TO Entity with relation_type and evidence",
+    "requires_math_verification": false
+  },
+  {
+    "id": "q14",
+    "question": "What frontend technologies power the research workspace?",
+    "ground_truth_answer": "Next.js App Router, TypeScript, Tailwind CSS, Lucide Icons, React-PDF, and Cytoscape.js / React Flow.",
+    "expected_context": "Next.js (App Router), TypeScript, Tailwind CSS, Lucide Icons, React-PDF, Cytoscape.js",
+    "requires_math_verification": false
+  },
+  {
+    "id": "q15",
+    "question": "What was the EBITDA margin in 2024?",
+    "ground_truth_answer": "The EBITDA margin was 30.0%, based on $30M EBITDA on $100M revenue.",
+    "expected_context": "EBITDA was $30M on $100M total revenue.",
+    "requires_math_verification": true
+  }
+]
