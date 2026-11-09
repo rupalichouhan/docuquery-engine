@@ -9,14 +9,25 @@ from app.db.models import Base
 # Ensure parent directory for local db exists
 os.makedirs("./data", exist_ok=True)
 
-# Normalize SQLite URL if it still has async prefix
-db_url = settings.DATABASE_URL.replace("+aiosqlite", "").replace("+asyncpg", "")
+# Normalize database URL across drivers & platforms (Supabase, Neon, Docker)
+raw_url = settings.DATABASE_URL.strip()
+if raw_url.startswith("postgres://"):
+    db_url = "postgresql+psycopg://" + raw_url[len("postgres://"):]
+elif raw_url.startswith("postgresql+asyncpg://"):
+    db_url = "postgresql+psycopg://" + raw_url[len("postgresql+asyncpg://"):]
+elif raw_url.startswith("postgresql://"):
+    db_url = "postgresql+psycopg://" + raw_url[len("postgresql://"):]
+elif raw_url.startswith("sqlite+aiosqlite://"):
+    db_url = "sqlite://" + raw_url[len("sqlite+aiosqlite://"):]
+else:
+    db_url = raw_url
 
 engine = create_engine(
     db_url,
     echo=False,
     connect_args={"check_same_thread": False} if "sqlite" in db_url else {},
 )
+
 
 SessionLocal = sessionmaker(
     autocommit=False,
