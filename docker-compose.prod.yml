@@ -1,0 +1,59 @@
+services:
+  postgres:
+    image: pgvector/pgvector:pg16
+    container_name: docuquery-postgres-prod
+    restart: always
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:-docuquery}
+      POSTGRES_USER: ${POSTGRES_USER:-docuquery}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-docuquery_password}
+    ports:
+      - "${POSTGRES_PORT:-5432}:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-docuquery} -d ${POSTGRES_DB:-docuquery}"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: docuquery-backend-prod
+    restart: always
+    environment:
+      ENVIRONMENT: production
+      PORT: 8000
+      HOST: 0.0.0.0
+      DATABASE_URL: postgresql+asyncpg://${POSTGRES_USER:-docuquery}:${POSTGRES_PASSWORD:-docuquery_password}@postgres:5432/${POSTGRES_DB:-docuquery}
+      GEMINI_API_KEY: ${GEMINI_API_KEY}
+      GEMINI_MODEL: ${GEMINI_MODEL:-gemini-3.8-flash}
+      CORS_ORIGINS: ${CORS_ORIGINS:-*}
+      KUZU_DB_PATH: /app/data/kuzu.db
+      UPLOAD_DIR: /app/data/uploads
+    ports:
+      - "8000:8000"
+    volumes:
+      - docuquery_data:/app/data
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+      args:
+        NEXT_PUBLIC_API_URL: ${NEXT_PUBLIC_API_URL:-http://localhost:8000}
+    container_name: docuquery-frontend-prod
+    restart: always
+    ports:
+      - "3000:3000"
+    depends_on:
+      - backend
+
+volumes:
+  postgres_data:
+  docuquery_data:

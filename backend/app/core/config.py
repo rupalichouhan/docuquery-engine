@@ -1,9 +1,11 @@
 from pathlib import Path
-from typing import List
+from typing import List, Any
+import json
 from pydantic import field_validator
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
-PROJECT_ROOT = Path(__file__).resolve().parent.parent.parent.parent
+BASE_DIR = Path(__file__).resolve().parent.parent.parent
+PROJECT_ROOT = BASE_DIR.parent if (BASE_DIR.parent / ".env").exists() else BASE_DIR
 
 
 class Settings(BaseSettings):
@@ -16,6 +18,21 @@ class Settings(BaseSettings):
         "http://localhost:8000",
         "http://127.0.0.1:8000",
     ]
+
+    @field_validator("CORS_ORIGINS", mode="before")
+    @classmethod
+    def parse_cors(cls, v: Any) -> List[str]:
+        if isinstance(v, str):
+            v = v.strip()
+            if v == "*":
+                return ["*"]
+            if v.startswith("[") and v.endswith("]"):
+                try:
+                    return json.loads(v)
+                except Exception:
+                    pass
+            return [origin.strip() for origin in v.split(",") if origin.strip()]
+        return v
 
     # Database: Supports Postgres pgvector and local SQLite
     DATABASE_URL: str = "sqlite+aiosqlite:///./data/docuquery.db"
